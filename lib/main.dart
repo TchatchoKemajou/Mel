@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/pages/article_detail.dart';
 import 'package:flutter_app/pages/splashscreen.dart';
+import 'package:flutter_app/provider/LanguageChangeProvider.dart';
 import 'package:flutter_app/provider/collection_provider.dart';
 import 'package:flutter_app/provider/compteprovider.dart';
 import 'package:flutter_app/provider/locationservice.dart';
@@ -10,6 +11,9 @@ import 'package:flutter_app/provider/produit_provider.dart';
 import 'package:flutter_app/services/google_sign_in.dart';
 import 'package:flutter_app/provider/notification.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'generated/l10n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'constantes.dart';
 
@@ -46,19 +50,34 @@ class _MyApp extends State<MyApp> {
         Provider<CollectionProvider>(create: (_) => CollectionProvider()),
         Provider<GoogleSignInProvider>(create: (_) => GoogleSignInProvider()),
         Provider<LocationService>(create: (_) => LocationService()),
-        ChangeNotifierProvider(create: (_) => NotificationService())
+        ChangeNotifierProvider(create: (_) => NotificationService()),
+        ChangeNotifierProvider(create: (_) =>  LanguageChangeProvider(),)
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: fisrtcolor,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+      child: Builder(
+        builder: (context) => Consumer<LanguageChangeProvider>(
+            builder: (context, value, child){
+              return MaterialApp(
+                title: 'Flutter Demo',
+                locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
+                localizationsDelegates: [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  primaryColor: fisrtcolor,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                routes:<String, WidgetBuilder> {
+                  '/': (BuildContext context)  => Splashcreen(),
+                  '/article': (BuildContext context)  => ArticleDetail()
+                },
+              );
+            }
         ),
-        routes:<String, WidgetBuilder> {
-          '/': (BuildContext context)  => Splashcreen(),
-          '/article': (BuildContext context)  => ArticleDetail()
-        },
       ),
     );
   }

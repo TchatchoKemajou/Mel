@@ -111,7 +111,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                   delegate: SliverChildListDelegate([
                     displaydetails(),
                   ]),
-                  itemExtent: 580.0,
+                  itemExtent: 700.0,
                 ),
                 snapshot.data != null
                     ? SliverPadding(
@@ -639,6 +639,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
       padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -660,7 +661,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                     letterSpacing: 1.5,
                   ),
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: 15,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -675,7 +676,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                             letterSpacing: 1.5,
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(width: 15,),
                         Text(
                           widget.article.productSellerPrice.toString(),
                           style: TextStyle(
@@ -690,7 +691,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                     stars(5),
                   ],
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: 15,),
                 Row(
                   children: [
                     Text(
@@ -713,7 +714,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: 30,),
                 ExpandablePanel(
                   header: Text(
                     "Description",
@@ -729,20 +730,20 @@ class _ArticleDetailState extends State<ArticleDetail> {
                        color: Colors.black,
                         fontSize: 14,
                         letterSpacing: 1.0,
-                        fontFamily: 'SamBold'
+                        fontFamily: 'SamRegular'
                     ),),
                   expanded: Text(widget.article.productDescription, softWrap: true,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         letterSpacing: 1.0,
-                        fontFamily: 'SamBold'
+                        fontFamily: 'SamRegular'
                     ),),
                 )
               ],
             ),
           ),
-          SizedBox(height: 15,),
+          SizedBox(height: 45,),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -873,7 +874,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
               ],
             ),
           ),
-          SizedBox(height: 15,),
+          SizedBox(height: 45,),
           // Container(
           //   margin: EdgeInsets.only(bottom: 10.0),
           //   padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 5.0),
@@ -1021,7 +1022,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
               ],
             ),
           ),
-          SizedBox(height: 15,),
+          SizedBox(height: 45,),
           Container(
             // margin: EdgeInsets.only(bottom: 10.0),
             padding: EdgeInsets.only(bottom: 5.0),
@@ -1053,14 +1054,14 @@ class _ArticleDetailState extends State<ArticleDetail> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
-                    fontFamily: 'SamBold',
+                    fontFamily: 'SamRegular',
                     letterSpacing: 1.0,
                   ),
                 )
               ],
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 40,),
           Text(
             "Articles similaires",
             style: TextStyle(

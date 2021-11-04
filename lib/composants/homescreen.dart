@@ -552,7 +552,7 @@ class _Homescreen extends State<Homescreen>{
       child: Text(
         "Achat direct",
         style: TextStyle(
-            color: color1,
+            color: color2,
             fontFamily: 'SamBold',
             fontSize: 12
         ),
@@ -663,7 +663,7 @@ class _Homescreen extends State<Homescreen>{
           ),
           SizedBox(height: 10,),
           Container(
-            height: 280,
+            height: 250,
             child: StreamBuilder<List<Produit>>(
                 stream: produits,
                 builder: (context, snapshot) {
@@ -690,7 +690,7 @@ class _Homescreen extends State<Homescreen>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 150,
+                                  height: 130,
                                   width: 180,
                                   child: CachedNetworkImage(
                                     imageUrl: snapshot.data[index].productImage[0],
@@ -704,7 +704,7 @@ class _Homescreen extends State<Homescreen>{
                                 ),
                                 Container(
                                   width: 180,
-                                  height: 120,
+                                  height: 100,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
