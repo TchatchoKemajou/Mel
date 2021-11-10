@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/compte.dart';
 import 'package:flutter_app/pages/editprofil.dart';
 import 'package:flutter_app/pages/guideuser.dart';
+import 'package:flutter_app/provider/LanguageChangeProvider.dart';
 import 'package:flutter_app/services/compteservice.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_app/generated/l10n.dart';
 
 import '../constantes.dart';
 
@@ -16,6 +19,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   String userId = FirebaseAuth.instance.currentUser.uid;
   Compte user;
+  List<String> langues;
+  String currentlanguage = "Français";
 
   Future<void> getcurrentuse() async{
     // User user = await sauth.user;
@@ -24,15 +29,23 @@ class _SettingsPageState extends State<SettingsPage> {
       user = result;
     });
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    langues = ["Français", "Anglais"];
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    final langueProvider = Provider.of<LanguageChangeProvider>(context, listen: true);
     getcurrentuse();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "Paramètres",
+          S.of(context).titleSetting,
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'SamBold',
@@ -160,20 +173,54 @@ class _SettingsPageState extends State<SettingsPage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "Français",
-                            style: TextStyle(
-                                fontFamily: 'SamRegular',
-                                color: Colors.black
-                            ),
-                          ),
-                          Icon(
-                            Icons.keyboard_arrow_right,
-                            color: secondcolor,
-                          ),
-                        ],
+                      Consumer<LanguageChangeProvider>(
+                          builder: (context, value, child){
+                            return DropdownButton<String>(
+                              value: value.currentLocaleName,
+                              dropdownColor: Colors.white,
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                //color: firstcolor,
+                              ),
+                              iconSize: 24,
+                              //elevation: 16,
+                              underline: Container(
+                                height: 1,
+                                color: Colors.white,
+                              ),
+                              style: TextStyle(
+                                  color: Colors.white
+                              ),
+                              onChanged: (String e){
+                                setState(() {
+                                  currentlanguage = e;
+                                });
+                                switch (e) {
+
+                                  case "Français":
+                                    langueProvider.changeLocale("fr", "Français");
+                                    break;
+
+                                  case "Anglais":
+                                    langueProvider.changeLocale("en", "Anglais");
+                                    break;
+                                }
+                              },
+                              items: langues
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'SamRegular'
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          }
                       )
                     ],
                   ),

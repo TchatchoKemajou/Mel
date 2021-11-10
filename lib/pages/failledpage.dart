@@ -91,7 +91,7 @@ class _FailedPageState extends State<FailedPage> {
                       }));
                 },
                 child: Text(
-                  "Réesayer",
+                  "Essayez à nouveau",
                   style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Sambold',
@@ -106,12 +106,12 @@ class _FailedPageState extends State<FailedPage> {
                         states) => fisrtcolor),
                     padding: MaterialStateProperty.all(
                         EdgeInsets.only(left: 80, right: 80)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          // side: BorderSide(color: Colors.red)
-                        )
-                    )
+                    // shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    //     RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(10.0),
+                    //       // side: BorderSide(color: Colors.red)
+                    //     )
+                    // )
                 ),
               )
             ],

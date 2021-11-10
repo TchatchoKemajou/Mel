@@ -115,7 +115,7 @@ class _EditProfilState extends State<EditProfil> {
             Navigator.pop(context);
           },
           child: Icon(
-            Icons.cancel_outlined,
+            Icons.arrow_back,
             color: Colors.black,
             size: 32,
           ),

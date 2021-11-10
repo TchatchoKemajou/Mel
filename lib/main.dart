@@ -56,8 +56,8 @@ class _MyApp extends State<MyApp> {
       child: Builder(
         builder: (context) => Consumer<LanguageChangeProvider>(
             builder: (context, value, child){
-              return MaterialApp(
-                title: 'Flutter Demo',
+              return  MaterialApp(
+                //title: 'Flutter Demo',
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
                 localizationsDelegates: [
                   S.delegate,
@@ -78,6 +78,50 @@ class _MyApp extends State<MyApp> {
               );
             }
         ),
+      ),
+    );
+  }
+}
+
+
+class LoadingScreen extends StatefulWidget {
+  final BuildContext context;
+  const LoadingScreen({@required this.context});
+
+  @override
+  _LoadingScreenState createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<LoadingScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getdata();
+  }
+
+  void getdata() async{
+    await Future.delayed(Duration(seconds: 2));
+    widget.context.read<LanguageChangeProvider>().doneLoading = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        // body: Center(
+        //   child: Text(
+        //     "Duvals",
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.bold,
+        //       fontSize: 24,
+        //       fontFamily: 'ManropeBold',
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

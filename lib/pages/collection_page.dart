@@ -23,10 +23,12 @@ class _CollectionPageState extends State<CollectionPage> {
           "Collection",
           style: TextStyle(
               color: Colors.black,
-              fontFamily: 'SamRegular'
+              fontFamily: 'SamBold',
+              letterSpacing: 1.0,
+              fontSize: 18
           ),
         ) ,
-        elevation: 0.0,
+        elevation: 2.0,
         foregroundColor: Colors.black,
         iconTheme: IconThemeData(
           color: Colors.black,

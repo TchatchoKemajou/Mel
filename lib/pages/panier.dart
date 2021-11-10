@@ -69,7 +69,7 @@ class _PanierState extends State<Panier> {
             Icon(Icons.shopping_cart, color: secondcolor, size: 18,),
           ],
         ) ,
-        elevation: 0.0,
+        elevation: 2.0,
         foregroundColor: Colors.black,
         iconTheme: IconThemeData(
           color: Colors.black,
@@ -82,6 +82,7 @@ class _PanierState extends State<Panier> {
             return snapshot.data == null
                 ? Center(child: Text("Aucun article dans le panier"),)
                 : ListView.builder(
+                padding: EdgeInsets.only(top: 20.0),
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   // for(int i=0; i<snapshot.data.length; i++){
@@ -143,7 +144,7 @@ class _PanierState extends State<Panier> {
                                             Text(
                                               snapshot.data[index].productListNegocian.contains(userId) ? snapshot.data[index].productMinimalPrice.toString() :snapshot.data[index].productSellerPrice.toString(),
                                               style: TextStyle(
-                                                color: fisrtcolor,
+                                                color: color2,
                                                 fontFamily: 'SamBold',
                                                 letterSpacing: 1.0,
                                                 fontSize: 14,
@@ -175,12 +176,12 @@ class _PanierState extends State<Panier> {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                          "par:",
+                                          "Vendu par:",
                                           style: TextStyle(
                                                 // color: Colors.grey,
                                                   fontFamily: 'SamBold',
                                                   fontSize: 14,
-                                                  color: secondcolor
+                                                  color: Colors.grey
                                           ),
                                         ),
                                                 SizedBox(width: 10.0,),
@@ -189,7 +190,7 @@ class _PanierState extends State<Panier> {
                                                   style: TextStyle(
                                                       fontFamily: 'SamBold',
                                                       fontSize: 14,
-                                                      color: secondcolor
+                                                      color: Colors.grey
                                                   ),
                                                 )
                                               ],
@@ -198,7 +199,7 @@ class _PanierState extends State<Panier> {
                                          //SizedBox(width: 30.0,),
                                         Icon(
                                             Icons.keyboard_arrow_right,
-                                            color: secondcolor
+                                            color: Colors.grey
                                         ),
                                       ],
                                     ),
@@ -340,7 +341,8 @@ class _PanierState extends State<Panier> {
                       color: fisrtcolor,
                       fontFamily: 'SamBold',
                       letterSpacing: 1.0,
-                      fontSize: 16,
+                      fontSize: 18,
+                      decoration: TextDecoration.underline
                     ),
                   ),
                   SizedBox(width: 5,),
@@ -356,27 +358,29 @@ class _PanierState extends State<Panier> {
               ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              // notifyme.instantNofitication();
+          InkWell(
+            onTap: (){
             },
-            child: Text(
-              "Valider",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'SamBold',
-                  letterSpacing: 1.5
+            child: Center(
+              child: Container(
+                //margin: EdgeInsets.only(bottom: 35.0),
+                padding: EdgeInsets.only(bottom:15.0, top: 15.0),
+                width: MediaQuery.of(context).size.width * 0.6,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: fisrtcolor,)
+                ),
+                child: Center(
+                  child: Text(
+                    "Confirmer la commande",
+                    style: TextStyle(
+                        color: fisrtcolor,
+                        fontFamily: 'SamBold'
+                    ),
+                  ),
+                ),
               ),
-            ),
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) => secondcolor),
-                padding: MaterialStateProperty.all(EdgeInsets.only(left: 80, right: 80)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      // side: BorderSide(color: Colors.red)
-                    )
-                )
             ),
           ),
         ],

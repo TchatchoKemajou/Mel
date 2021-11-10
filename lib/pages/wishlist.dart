@@ -19,16 +19,20 @@ class _WishListState extends State<WishList> {
     //final articleProvider = Provider.of<ArticleProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("WishList"),
-        flexibleSpace: Container(
-          width: double.infinity,
-          // height: 80,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/header1.png'),
-                  fit: BoxFit.fill
-              )
+        backgroundColor: Colors.white,
+        title: Text(
+            "WishList",
+          style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'SamBold',
+              letterSpacing: 1.0,
+              fontSize: 18
           ),
+        ),
+        elevation: 2.0,
+        foregroundColor: Colors.black,
+        iconTheme: IconThemeData(
+          color: Colors.black,
         ),
       ),
       body: StreamBuilder<List<Produit>>(

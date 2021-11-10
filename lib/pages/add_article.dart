@@ -54,6 +54,7 @@ class _AddArticleState extends State<AddArticle> {
   List<String> Stockage = [];
   List<String> pixelAvant = [];
   List<String> pixelArriere = [];
+  List<String> pointRelais = [];
   Map<String, dynamic> caracteristiques = Map();
   final referenceController = TextEditingController();
   final priceController = TextEditingController();
@@ -234,8 +235,9 @@ class _AddArticleState extends State<AddArticle> {
     Provider.of<NotificationService>(context, listen: false).initialize();
    // final produitprovider = Provider.of<ArticleProvider>(context, listen: false);
     final produitprovider =  Provider.of<ProduitProvider>(context, listen: false);
-    categorielist = ['Chaussures', 'Véhicules', 'Electro-Menager', 'Sacs', 'Vêtements', 'Téléphones', 'Ordinateurs', 'Cosmétiques', 'Télévision'];
+    categorielist = ['Chaussures', 'Electro-Menager', 'Sacs', 'Vêtements', 'Téléphones', 'Ordinateurs', 'Cosmétiques', 'Télévision'];
     Collection = ['Hommes', 'Femmes', 'Enfants', 'Autres'];
+    pointRelais = ['Douala, village, entrée lycée', 'Douala, Ndokoti, tradex', 'Douala, Nyala, chateau', 'Douala, Akwa, marché'];
     osList = ['Windows', 'Mac OS', 'Linux', 'Autres'];
     ramlist = ['1GB', '2GB', '4GB', '6GB', '8GB', '10GB', '12GB', '14GB', '16GB', '32GB', '64GB'];
     Stockage = ['50GB', '80GB', '120GB', '250GB', '500GB', '750GB', '1T'];
@@ -299,19 +301,20 @@ class _AddArticleState extends State<AddArticle> {
       });
     }else place = "";
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: fisrtcolor,
+        backgroundColor: Colors.white,
         title: Text(
           "Ajouter un article",
           style: TextStyle(
-            color: Colors.white,
+              color: Colors.black,
+              fontFamily: 'SamBold',
+              letterSpacing: 1.0,
+              fontSize: 18
           ),
-        ) ,
-        elevation: 0.0,
-        foregroundColor: Colors.black,
-        iconTheme: IconThemeData(
-          color: Colors.white,
         ),
+        elevation: 2.0,
+        foregroundColor: Colors.black,
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),
@@ -342,47 +345,8 @@ class _AddArticleState extends State<AddArticle> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           selectImage(),
-          selectCollection(),
-          SizedBox(height: 10.0,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Nom",
-                style: TextStyle(
-                  color: secondcolor,
-                  fontFamily: 'SamBold',
-                  fontWeight: FontWeight.w500,
-                  // fontSize: 12
-                ),
-              ),
-              SizedBox(height: 5.0,),
-              Container(
-                // width: MediaQuery.of(context).size.width * 0.7,
-                padding: EdgeInsets.only(left:10.0,),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.grey,)
-                ),
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  controller: referenceController,
-                  onChanged: (e) => produitprovider.changeProductReference = e,
-                  validator: (e) => e.isEmpty ? " Reference obligatoire":null,
-                  autocorrect: true,
-                  style: TextStyle(
-                    // fontFamily: 'rowregular'
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "Ex: Air Max pro 2021",
-                    border: InputBorder.none,
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 10.0,),
+         // selectCollection(),
+          SizedBox(height: 20.0,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -444,6 +408,133 @@ class _AddArticleState extends State<AddArticle> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                "Nom ou Marque",
+                style: TextStyle(
+                  color: secondcolor,
+                  fontFamily: 'SamBold',
+                  fontWeight: FontWeight.w500,
+                  // fontSize: 12
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Container(
+                // width: MediaQuery.of(context).size.width * 0.7,
+                padding: EdgeInsets.only(left:10.0,),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.grey,)
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller: referenceController,
+                  onChanged: (e) => produitprovider.changeProductReference = e,
+                  validator: (e) => e.isEmpty ? " Reference obligatoire":null,
+                  autocorrect: true,
+                  style: TextStyle(
+                    // fontFamily: 'rowregular'
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Ex: Air Max pro 2021",
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 10.0,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Couleur",
+                style: TextStyle(
+                  color: secondcolor,
+                  fontFamily: 'SamBold',
+                  fontWeight: FontWeight.w500,
+                  // fontSize: 12
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Container(
+                // width: MediaQuery.of(context).size.width * 0.7,
+                padding: EdgeInsets.only(left:10.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.grey,)
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.multiline,
+                  //controller: etatController,
+                  onChanged: (e) {
+                    setState(() {
+                      caracteristiques.update("couleur", (value) => e);
+                      produitprovider.changeProductCaracteristique = caracteristiques;
+                    });
+                  },
+                  validator: (e) => e.isEmpty ? " le champ couleur est obligatoire":null,
+                  //autocorrect: true,
+                  style: TextStyle(
+                    // fontFamily: 'rowregular'
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Ex: noir, blanc, ...",
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 10.0,),
+          produitprovider.productCategorie == "Chaussures" || produitprovider.productCategorie == "Vètements" || produitprovider.productCategorie == "Télévision" ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                produitprovider.productCategorie == "Chaussures" ? "Pointure" : "Taille",
+                style: TextStyle(
+                  color: secondcolor,
+                  fontFamily: 'SamBold',
+                  fontWeight: FontWeight.w500,
+                  // fontSize: 12
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Container(
+                // width: MediaQuery.of(context).size.width * 0.7,
+                padding: EdgeInsets.only(left:10.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.grey,)
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller: tailleController,
+                  onChanged: (e) {
+                    setState(() {
+                      caracteristiques.update("taille", (value) => e);
+                      produitprovider.changeProductCaracteristique = caracteristiques;
+                    });
+                  },
+                  validator: (e) => e.isEmpty ? " la taille est obligatoire":null,
+                  //autocorrect: true,
+                  style: TextStyle(
+                    // fontFamily: 'rowregular'
+                  ),
+                  decoration: InputDecoration(
+                    hintText: produitprovider.productCategorie == "Télévision" ? "taille en pouce ex: 54" : "Ex: 15 ou XL pour les vètements",
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ) : Container(),
+          SizedBox(height: 10.0,),
+          produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
                 "Caratéristiques",
                 style: TextStyle(
                   color: secondcolor,
@@ -464,78 +555,6 @@ class _AddArticleState extends State<AddArticle> {
                 child: Wrap(
                   spacing: 5.0,
                   children: [
-                    Column(
-                      children: [
-                        Text(
-                          "taille",
-                          style: TextStyle(
-                              color: secondcolor,
-                              fontFamily: 'SamBold',
-                              fontSize: 12
-                          ),
-                        ),
-                        SizedBox(height: 10.0,),
-                        SpinnerInput(
-                          minValue: 0,
-                          maxValue: 200,
-                          plusButton: SpinnerButtonStyle(elevation: 0, color: Colors.blue, height: 25.0, width: 25.0),
-                          minusButton: SpinnerButtonStyle(elevation: 0, color: Colors.red, height: 25.0, width: 25.0),
-                          middleNumberWidth: 70,
-                          middleNumberPadding: EdgeInsets.all(0),
-                          middleNumberStyle: TextStyle(fontSize: 14),
-                          spinnerValue: produitprovider.productCaracteristique["taille"],
-                          onChange: (e) {
-                            setState(() {
-                              caracteristiques.update("taille", (value) => e);
-                              produitprovider.changeProductCaracteristique = caracteristiques;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Couleur",
-                          style: TextStyle(
-                              color: secondcolor,
-                              fontFamily: 'SamBold',
-                              fontSize: 12
-                          ),
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(left: 15.0),
-                            child: DropdownButton<String>(
-                              value: produitprovider.productCaracteristique["couleur"],
-                              icon: Icon(
-                                Icons.arrow_drop_down,
-                              ),
-                              iconSize: 24,
-                              //elevation: 16,
-                              underline: Container(
-                                height: 1,
-                                color: Colors.white,
-                              ),
-                              style: TextStyle(
-                                  color: Colors.black
-                              ),
-                              onChanged: (String e) {
-                                setState(() {
-                                  caracteristiques.update("couleur", (value) => e);
-                                  produitprovider.changeProductCaracteristique = caracteristiques;
-                                });
-                              },
-                              items: colorList
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            )
-                        ),
-                      ],
-                    ),
                     produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ? Column(
                       children: [
                         Text(
@@ -798,7 +817,7 @@ class _AddArticleState extends State<AddArticle> {
                 ),
               ),
             ],
-          ),
+          ) : Container(),
           SizedBox(height: 10.0,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -925,7 +944,7 @@ class _AddArticleState extends State<AddArticle> {
                   keyboardType: TextInputType.multiline,
                   controller: etatController,
                   onChanged: (e) => produitprovider.changeProductEtat = e,
-                  validator: (e) => e.isEmpty ? " le champ état est  obligatoire":null,
+                  validator: (e) => e.isEmpty ? " l\'état est  obligatoire":null,
                   //autocorrect: true,
                   style: TextStyle(
                     // fontFamily: 'rowregular'
@@ -964,7 +983,7 @@ class _AddArticleState extends State<AddArticle> {
                   keyboardType: TextInputType.multiline,
                   controller: descriptionController,
                   onChanged: (e) => produitprovider.changeProductDescription = e,
-                  validator: (e) => e.isEmpty ? " Mot de passe obligatoire": e.length < 6 ? "Le mot de passe doit metre supérieur à 6 caractères":null,
+                  validator: (e) => e.isEmpty ? "La description est obligatoire":null,
                   //autocorrect: true,
                   style: TextStyle(
                     // fontFamily: 'rowregular'
@@ -978,8 +997,65 @@ class _AddArticleState extends State<AddArticle> {
             ],
           ),
           SizedBox(height: 20,),
-          ElevatedButton(
-            onPressed: () async {
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Point de relais",
+                style: TextStyle(
+                  color: secondcolor,
+                  fontFamily: 'SamBold',
+                  fontWeight: FontWeight.w500,
+                  // fontSize: 12
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Container(
+                // width: MediaQuery.of(context).size.width * 0.7,
+                  padding: EdgeInsets.only(left:10.0, right: 10.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: Colors.grey,)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      DropdownButton<String>(
+                        value: 'Douala, village, entrée lycée',
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                        ),
+                        iconSize: 24,
+                        //elevation: 16,
+                        underline: Container(
+                          height: 1,
+                          color: Colors.white,
+                        ),
+                        style: TextStyle(
+                            color: Colors.black
+                        ),
+                        onChanged: (String newValue) {
+                          // setState(() {
+                          //   produitprovider.changeProductCategorie = newValue;
+                          // });
+                        },
+                        items: pointRelais
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  )
+              )
+            ],
+          ),
+          SizedBox(height: 20.0,),
+          InkWell(
+            onTap: () async{
               if(keyA.currentState.validate() && files.length > 0){
                 for(int i=0; i<files.length; i++){
                   firebase_storage.UploadTask task = await uploadFile(files[i]);
@@ -1013,18 +1089,26 @@ class _AddArticleState extends State<AddArticle> {
               // notifyme.ChangeNotificationMessage = "l'article que vous venez d'ajouter sera supprimé dans deux semaines!";
               // notifyme.instantNofitication(notifyme.notificationTitle, notifyme.notificationMessage);
             },
-            child: Text(
-              "Publier",
-            ),
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) => fisrtcolor),
-                padding: MaterialStateProperty.all(EdgeInsets.only(left: 80, right: 80)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      // side: BorderSide(color: Colors.red)
-                    )
-                )
+            child: Center(
+              child: Container(
+                //margin: EdgeInsets.only(bottom: 35.0),
+                padding: EdgeInsets.only(bottom:15.0, top: 15.0),
+                width: MediaQuery.of(context).size.width * 0.6,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: fisrtcolor,)
+                ),
+                child: Center(
+                  child: Text(
+                    "Publier  l\'article",
+                    style: TextStyle(
+                        color: fisrtcolor,
+                        fontFamily: 'SamBold'
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           SizedBox(height: 20,),
@@ -1150,7 +1234,7 @@ class _AddArticleState extends State<AddArticle> {
               },
               child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: fisrtcolor,
                       borderRadius: BorderRadius.circular(8.0),
                   ),
                   height: 80,

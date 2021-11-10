@@ -111,7 +111,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                   delegate: SliverChildListDelegate([
                     displaydetails(),
                   ]),
-                  itemExtent: 700.0,
+                  itemExtent: 750.0,
                 ),
                 snapshot.data != null
                     ? SliverPadding(
@@ -214,7 +214,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
+          widget.article.productNegociable == true ? InkWell(
             onTap: () {
               if(widget.article.productNegociable == false){
                 Toast.show("cet article n'autorise pas la négociation!", context, duration: Toast.LENGTH_LONG, gravity:  Toast.TOP);
@@ -223,8 +223,8 @@ class _ArticleDetailState extends State<ArticleDetail> {
                 _openDialog(infoNegociation());
               }
             },
-            child: Chip(
-              backgroundColor: color1,
+            child:  Chip(
+              backgroundColor: color2,
               label: Text(
                 "Negocier",
                 style: TextStyle(
@@ -238,13 +238,13 @@ class _ArticleDetailState extends State<ArticleDetail> {
                 Icons.hourglass_bottom,
                 color: Colors.white,
               ),
-            ),
-          ),
+            ) ,
+          ) : Container(width: 1, height: 1,),
           SizedBox(width: 5,),
           Chip(
             backgroundColor: fisrtcolor,
             label: Text(
-              "Acheter maintenant",
+              "Achat direct",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
@@ -632,6 +632,15 @@ class _ArticleDetailState extends State<ArticleDetail> {
     );
   }
 
+  getdivider(){
+    return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      width: double.infinity,
+      height: 0.3,
+      color: Colors.grey,
+    );
+  }
+
   displaydetails() {
     final produitprovider =  Provider.of<ProduitProvider>(context);
     //final articleProvider = Provider.of<ArticleProvider>(context);
@@ -641,431 +650,444 @@ class _ArticleDetailState extends State<ArticleDetail> {
         crossAxisAlignment: CrossAxisAlignment.start,
        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 2,
-                        color: background
-                    )
-                )
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.article.productReference,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'SamBold',
-                    letterSpacing: 1.5,
-                  ),
+          // premier bloc
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.article.productReference,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'SamBold',
+                  letterSpacing: 1.5,
                 ),
-                SizedBox(height: 15,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "FCFA",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: 'PopSemi',
-                            letterSpacing: 1.5,
-                          ),
+              ),
+              SizedBox(height: 15,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "FCFA",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: 'PopSemi',
+                          letterSpacing: 1.5,
                         ),
-                        SizedBox(width: 15,),
-                        Text(
-                          widget.article.productSellerPrice.toString(),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: 'PopSemi',
-                            letterSpacing: 1.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                    stars(5),
-                  ],
-                ),
-                SizedBox(height: 15,),
-                Row(
-                  children: [
-                    Text(
-                      "-60%",
-                      style: TextStyle(
-                        color: color1,
-                        fontSize: 14,
-                        fontFamily: 'SamBold',
                       ),
+                      SizedBox(width: 15,),
+                      Text(
+                        widget.article.productSellerPrice.toString(),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'PopSemi',
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                  stars(5),
+                ],
+              ),
+              SizedBox(height: 15,),
+              widget.article.productNegociable == true ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "0 enchères",
+                    style: TextStyle(
+                      color: fisrtcolor,
+                      fontSize: 14,
+                      fontFamily: 'SamBold',
                     ),
-                    SizedBox(width: 20,),
-                    Text(
-                      widget.article.productSellerPrice.toString(),
-                      style: TextStyle(
-                          color: Colors.grey,
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Plafond: ",
+                        style: TextStyle(
+                          //color: color1,
                           fontSize: 14,
-                          fontFamily: 'SamBold',
-                          decoration: TextDecoration.lineThrough
+                          fontFamily: 'SamRegular',
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30,),
-                ExpandablePanel(
-                  header: Text(
-                    "Description",
-                    style: TextStyle(
-                        color: secondcolor,
-                        fontSize: 16,
-                        letterSpacing: 1.0,
-                        fontFamily: 'SamBold'
-                    ),
+                      Text(
+                        widget.article.productSellerPrice.toString(),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'SamBold',
+                           // decoration: TextDecoration.lineThrough
+                        ),
+                      ),
+                    ],
                   ),
-                  collapsed: Text(widget.article.productDescription, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                       color: Colors.black,
-                        fontSize: 14,
-                        letterSpacing: 1.0,
-                        fontFamily: 'SamRegular'
-                    ),),
-                  expanded: Text(widget.article.productDescription, softWrap: true,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        letterSpacing: 1.0,
-                        fontFamily: 'SamRegular'
-                    ),),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 45,),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 2,
-                        color: background
-                    )
-                )
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Caractéristique",
+                ],
+              ) : Container(),
+              SizedBox(height: 15,),
+              ExpandablePanel(
+                header: Text(
+                  "Description",
                   style: TextStyle(
-                      color: secondcolor,
-                      fontSize: 16,
+                      //color: secondcolor,
+                      fontSize: 15,
                       letterSpacing: 1.0,
-                      fontFamily: 'SamBold'
+                      fontFamily: 'SamRegular'
                   ),
                 ),
-                SizedBox(height: 5.0,),
-                Wrap(
-                  spacing: 10.0,
-                  children: [
-                    Text(
-                      "couleur:   " + produitprovider.productCaracteristique["couleur"],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ),
-                    Text(
-                      "taille:   " + produitprovider.productCaracteristique["taille"].toString(),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ),
-                    produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ? Text(
-                      "Ram:   " + produitprovider.productCaracteristique["ram"] ,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ) : SizedBox(),
-                    produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ?  Text(
-                      "Stockage:     "  + produitprovider.productCaracteristique["stockage"],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ) : SizedBox(),
-                    produitprovider.productCategorie == "Ordinateurs" ? Text(
-                      "os:     " + produitprovider.productCaracteristique["os"],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ) : SizedBox(),
-                    produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ? Text(
-                      "CPU(GHz):      " + produitprovider.productCaracteristique["cpu"],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ) :SizedBox(),
-                    produitprovider.productCategorie == "Téléphones" ? Text(
-                      "C avant:     " + produitprovider.productCaracteristique["pixelavant"],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ) : SizedBox(),
-                    produitprovider.productCategorie == "Téléphones" ? Text(
-                      "C arrière:     " + produitprovider.productCaracteristique["pixelarrier"],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            letterSpacing: 1.0,
-                            fontFamily: 'SamBold'
-                        )
-                    ) :SizedBox(),
-                  ],
-                ),
-
-                SizedBox(height: 10,),
-                ExpandablePanel(
-                  header: Text(
-                    "Etat",
-                    style: TextStyle(
-                        color: secondcolor,
-                        fontSize: 16,
-                        letterSpacing: 1.0,
-                        fontFamily: 'SamBold'
-                    ),
-                  ),
-                  collapsed: Text(widget.article.productEtat, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        letterSpacing: 1.0,
-                        fontFamily: 'SamBold'
-                    ),),
-                  expanded: Text(widget.article.productEtat, softWrap: true,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        letterSpacing: 1.0,
-                        fontFamily: 'SamBold'
-                    ),),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 45,),
-          // Container(
-          //   margin: EdgeInsets.only(bottom: 10.0),
-          //   padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 5.0),
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(
-          //       color: color5,
-          //       borderRadius: BorderRadius.circular(10.0)
-          //   ),
-          //   child: Column(
-          //     children: [
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Container(
-          //             padding: EdgeInsets.only(left: 5.0, right: 5.0, ),
-          //             decoration: BoxDecoration(
-          //                 color: fisrtcolor,
-          //                 borderRadius: BorderRadius.circular(10.0)
-          //             ),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 Icon(
-          //                     Icons.warning,
-          //                     color: Colors.white,
-          //                     size: 10,
-          //                   ),
-          //                   Text(
-          //                     "Attention",
-          //                     style: TextStyle(
-          //                         color: Colors.white,
-          //                         fontFamily: 'MontBold',
-          //                         fontSize: 10
-          //                     ),
-          //                   ),
-          //               ],
-          //             ),
-          //           ),
-          //           Icon(
-          //             Icons.close,
-          //             size: 18,
-          //           )
-          //         ],
-          //       ),
-          //       SizedBox(height: 5.0,),
-          //       Text(
-          //         "Because of the COVID-19 pandemic, please make sure to check the safety of your package with your supplier before ordering anything.",
-          //         textAlign: TextAlign.center,
-          //         style: TextStyle(
-          //           fontSize: 12,
-          //           fontFamily: 'SamLight'
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 2,
-                        color: background
-                    )
-                )
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Coupons",
-                      style: TextStyle(
-                          color: secondcolor,
-                          fontSize: 16,
-                          letterSpacing: 1.0,
-                          fontFamily: 'SamBold'
-                      ),
-                    ),
-                    Icon(
-                      FontAwesomeIcons.ellipsisH, color: Colors.black54,
-                      size: 18,
-                    )
-                  ],
-                ),
-                SizedBox(height: 5.0,),
-                Row(
-                  children: [
-                    Chip(
-                      backgroundColor: color7,
-                      label: Row(
-                        children: [
-                          Text(
-                            "FCFA",
-                            style: TextStyle(
-                              color: color6,
-                              fontSize: 14,
-                              fontFamily: 'SamBold',
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                          SizedBox(width: 5,),
-                          Text(
-                            widget.article.productPrice.toString(),
-                            style: TextStyle(
-                              color: color6,
-                              fontSize: 14,
-                              fontFamily: 'SamBold',
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 5,),
-                    Chip(
-                      backgroundColor: color7,
-                      label: Row(
-                        children: [
-                          Text(
-                            "FCFA",
-                            style: TextStyle(
-                              color: color6,
-                              fontSize: 14,
-                              fontFamily: 'SamBold',
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                          SizedBox(width: 5,),
-                          Text(
-                            widget.article.productPrice.toString(),
-                            style: TextStyle(
-                              color: color6,
-                              fontSize: 14,
-                              fontFamily: 'SamBold',
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 45,),
-          Container(
-            // margin: EdgeInsets.only(bottom: 10.0),
-            padding: EdgeInsets.only(bottom: 5.0),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 2,
-                        color: background
-                    )
-                )
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Expédition",
+                collapsed: Text(widget.article.productDescription, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      color: secondcolor,
-                      fontSize: 16,
+                     color: Colors.black,
+                      fontSize: 14,
                       letterSpacing: 1.0,
-                      fontFamily: 'SamBold'
-                  ),
-                ),
-                SizedBox(height: 5.0,),
-                Text(
-                  "Because of the COVID-19 pandemic, please make sure to check the safety of your package with your supplier before ordering anything.",
-                  textAlign: TextAlign.left,
+                      fontFamily: 'SamRegular'
+                  ),),
+                expanded: Text(widget.article.productDescription, softWrap: true,
                   style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      letterSpacing: 1.0,
+                      fontFamily: 'SamRegular'
+                  ),),
+              )
+            ],
+          ),
+         // SizedBox(height: 20,),
+          getdivider(),
+          // deuxième bloc
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Caractéristique",
+                style: TextStyle(
+                   // color: secondcolor,
+                    fontSize: 15,
+                    letterSpacing: 1.0,
+                    fontFamily: 'SamRegular'
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Wrap(
+                spacing: 30.0,
+                runSpacing: 5.0,
+                children: [
+                  Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "couleur: ",
+                          style: TextStyle(
+                              //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["couleur"],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ),
+                  produitprovider.productCategorie == "Chaussures" || produitprovider.productCategorie == "Vètements" || produitprovider.productCategorie == "Télévision" ? Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "taille: ",
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                         produitprovider.productCaracteristique["taille"].toString() + produitprovider.productCategorie == "Télévision" ? "pouce" : "",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) : SizedBox(),
+                  produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ? Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "Ram: ",
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["ram"] ,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) : SizedBox(),
+                  produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ?  Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "Stockage: ",
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["stockage"],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) : SizedBox(),
+                  produitprovider.productCategorie == "Ordinateurs" ? Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "Système d'exploitation: ",
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["os"],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) : SizedBox(),
+                  produitprovider.productCategorie == "Ordinateurs" || produitprovider.productCategorie == "Téléphones" ? Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "CPU(GHz): ",
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["cpu"],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) :SizedBox(),
+                  produitprovider.productCategorie == "Téléphones" ? Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "Camera avant: ",
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["pixelavant"],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) : SizedBox(),
+                  produitprovider.productCategorie == "Téléphones" ? Row(
+                    mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "Camera arrière: " ,
+                          style: TextStyle(
+                            //color: Colors.black,
+                              fontSize: 13,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamRegular'
+                          )
+                      ),
+                      Text(
+                        produitprovider.productCaracteristique["pixelarrier"],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              letterSpacing: 1.0,
+                              fontFamily: 'SamBold'
+                          )
+                      ),
+                    ],
+                  ) :SizedBox(),
+                ],
+              ),
+            ],
+          ),
+          getdivider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Etat",
+                style: TextStyle(
+                   // color: secondcolor,
+                    fontSize: 16,
+                    letterSpacing: 1.0,
+                    fontFamily: 'SamRegular'
+                ),
+              ),
+              SizedBox(height: 10,),
+              Text(widget.article.productEtat, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
+                style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
-                    fontFamily: 'SamRegular',
                     letterSpacing: 1.0,
-                  ),
-                )
-              ],
-            ),
+                    fontFamily: 'SamBold'
+                ),),
+            ],
           ),
-          SizedBox(height: 40,),
+          getdivider(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Catégorie",
+                style: TextStyle(
+                  // color: secondcolor,
+                    fontSize: 15,
+                    letterSpacing: 1.0,
+                    fontFamily: 'SamRegular'
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.article.productCategorie,
+                    style: TextStyle(
+                      color: fisrtcolor,
+                      fontFamily: 'SamRegular',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Aller",
+                        style: TextStyle(
+                            fontFamily: 'SamRegular',
+                            color: fisrtcolor
+                        ),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_right,
+                        color: fisrtcolor,
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
+          getdivider(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Paiement",
+                style: TextStyle(
+                   // color: secondcolor,
+                    fontSize: 15,
+                    letterSpacing: 1.0,
+                    fontFamily: 'SamRegular'
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Text('Avance de 5O% via operateur mobile et versement final au retrait de l\'article',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    letterSpacing: 1.5,
+                    fontFamily: 'SamBold'
+                ),),
+            ],
+          ),
+          getdivider(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Point de relais",
+                style: TextStyle(
+                  // color: secondcolor,
+                    fontSize: 15,
+                    letterSpacing: 1.0,
+                    fontFamily: 'SamRegular'
+                ),
+              ),
+              SizedBox(height: 5.0,),
+              Row(
+                children: [
+                  Icon( Icons.location_on, color: fisrtcolor,),
+                  Text('Douala, village, entrée lycée',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        letterSpacing: 1.5,
+                        fontFamily: 'SamBold'
+                    ),),
+                ],
+              ),
+            ],
+          ),
+          getdivider(),
           Text(
             "Articles similaires",
             style: TextStyle(
-                color: secondcolor,
+                color: Colors.black,
                 fontSize: 16,
                 fontFamily: 'SamBold',
                 letterSpacing: 1.0

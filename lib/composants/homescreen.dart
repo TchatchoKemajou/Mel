@@ -261,7 +261,7 @@ class _Homescreen extends State<Homescreen>{
         Text(
           "1h 3m 2s",
           style: TextStyle(
-            color: color1,
+            color: color2,
             fontFamily: 'SamBold',
             fontSize: 12,
           ),

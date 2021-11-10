@@ -161,7 +161,7 @@ class _ProfilState extends State<Profil> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            "Mon Mel",
+            "Profil",
             style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'SamBold',
@@ -169,7 +169,7 @@ class _ProfilState extends State<Profil> {
                 fontSize: 18
             ),
           ),
-          centerTitle: true,
+          //centerTitle: true,
           elevation: 2.0,
           foregroundColor: Colors.black,
           iconTheme: IconThemeData(
@@ -188,34 +188,24 @@ class _ProfilState extends State<Profil> {
                     },
                     child: Icon(
                       Icons.edit,
-                      color: Colors.black,
+                      color: Colors.black54,
                       size: 24,
                     ),
                   ),
                   Stack(
                     children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.white54,
-                            borderRadius: BorderRadius.circular(20.0)
-                        ),
-                        child: Center(
-                          child: IconButton(
-                            icon: Icon(Icons.notifications, color: Colors.black, size: 24.0,),
-                            onPressed: () {
-                              Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context){
-                                return MessagePage();
-                              }));
-                            },
-                            // color: thirdcolor,
-                          ),
-                        ),
+                      IconButton(
+                        icon: Icon(Icons.notifications, color: Colors.black54, size: 24.0,),
+                        onPressed: () {
+                          Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context){
+                            return MessagePage();
+                          }));
+                        },
+                        // color: thirdcolor,
                       ),
                       Positioned(
-                        right: 8.0,
-                        top: 5.0,
+                        right: 10.0,
+                        top: 10.0,
                         child: Container(
                           height: 8,
                           width: 8,
@@ -363,7 +353,7 @@ class _ProfilState extends State<Profil> {
                 height: 30.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
-                  color: color4,
+                  color: Colors.grey,
                 ),
                 child: Center(
                   child: IconButton(
@@ -390,7 +380,7 @@ class _ProfilState extends State<Profil> {
                 user.compteName,
                 style: TextStyle(
                    // color: Colors.white,
-                    fontFamily: 'SamBold',
+                    fontFamily: 'SamRegular',
                     fontWeight: FontWeight.w500,
                     fontSize: 18
                 ),
@@ -399,13 +389,13 @@ class _ProfilState extends State<Profil> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon( Icons.location_on, color: color3,),
+                  Icon( Icons.location_on, color: Colors.grey,),
                   user != null
                       ? Text(
                     "Cameroun, " + user.compteAddress["region"] + ", " + user.compteAddress["ville"],
                     style: TextStyle(
                        // color: Colors.white,
-                        fontFamily: 'SamBold',
+                        fontFamily: 'SamRegular',
                         fontWeight: FontWeight.w500,
                         fontSize: 15
                     ),
@@ -428,7 +418,7 @@ class _ProfilState extends State<Profil> {
           child: Text(
             widget.id == userId ? "Mes postes sur Mel" : "Articles postés",
             style: TextStyle(
-                color: secondcolor,
+                color: Colors.black,
                 fontSize: 15,
                 letterSpacing: 1.0,
                 fontFamily: 'SamBold'
@@ -448,11 +438,11 @@ class _ProfilState extends State<Profil> {
           },
           child: Row(
             children: [
-              Icon( Icons.add_moderator, color: color1, size: 16,),
+              Icon( Icons.add_moderator, color: color2, size: 16,),
               Text(
                 "  Mel Premuim",
                 style: TextStyle(
-                  color: color1,
+                  color: color2,
                     fontSize: 14,
                     fontFamily: 'SamBold',
                     letterSpacing: 1.5
@@ -479,11 +469,11 @@ class _ProfilState extends State<Profil> {
           },
           child: Row(
             children: [
-              Icon( Icons.settings, color: secondcolor, size: 16,),
+              Icon( Icons.settings, color: fisrtcolor, size: 16,),
               Text(
                 "  Réglages",
                 style: TextStyle(
-                    color: secondcolor,
+                    color: fisrtcolor,
                     fontSize: 14,
                     fontFamily: 'SamBold',
                     letterSpacing: 1.5
@@ -635,11 +625,11 @@ class _ProfilState extends State<Profil> {
           },
           child: Row(
             children: [
-              Icon( Icons.add_moderator, color: color4, size: 16,),
+              Icon( Icons.add_moderator, color: fisrtcolor, size: 16,),
               Text(
                 "  Evaluer",
                 style: TextStyle(
-                    color: color4,
+                    color: fisrtcolor,
                     fontSize: 14,
                     fontFamily: 'SamBold',
                     letterSpacing: 1.5
@@ -681,11 +671,11 @@ class _ProfilState extends State<Profil> {
           },
           child: Row(
             children: [
-              Icon( Icons.add_circle_outline, color: color3, size: 16,),
+              Icon( Icons.add_circle_outline, color: color2, size: 16,),
               Text(
                 user.compteAbonnes.contains(userId) ? "Se désabonner" : " S'abonner",
                 style: TextStyle(
-                    color: color3,
+                    color: color2,
                     fontSize: 14,
                     fontFamily: 'SamBold',
                     letterSpacing: 1.5

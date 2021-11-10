@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/utilitaire.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageChangeProvider with ChangeNotifier{
-  Utilitaire utilitaire = Utilitaire();
   Locale _currentLocale;
   String _currentLocaleName = "Français";
   bool _doneLoading = false;
